@@ -1,14 +1,7 @@
 import React, {Component} from 'react';
-import RecipeDetails from './RecipeDetails';
 class Recipe extends Component {
   render() {
-    const {
-      image_url,
-      title,
-      source_url,
-      publisher,
-      recipe_id,
-    } = this.props.recipe;
+    const {image_url, title, source_url, publisher} = this.props.recipe;
     const {handleDetails} = this.props;
     return (
       <React.Fragment>
@@ -35,7 +28,8 @@ class Recipe extends Component {
                 <a
                   href={source_url}
                   className="btn btn-success mx-2 text-capitalize"
-                  target="_blank">
+                  target="_blank"
+                  rel="noopener noreferrer">
                   recipe url
                 </a>
               </div>

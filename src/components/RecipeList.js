@@ -21,9 +21,7 @@ class RecipeList extends Component {
         />
         <div className="container my-3">
           <div className="row">
-            <div className="col-10 mx-auto col-md-6 text-center text-uppercase mb-3">
-              <h1 className="text-slanted"> recipe list</h1>
-            </div>
+            <div className="col-10 mx-auto col-md-6 text-center text-uppercase mb-3" />
             <div className="row">
               {error ? (
                 <h1 className="text-danger text-center">{error}</h1>

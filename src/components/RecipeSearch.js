@@ -20,7 +20,6 @@ class RecipeSearch extends Component {
                   <input
                     type="text"
                     name="search"
-                    className=""
                     placeholder="chicken, onions, carrots"
                     className="form-control"
                     value={value}

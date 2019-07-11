@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Recipe from './components/Recipe';
 import {recipes} from './tempList';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
