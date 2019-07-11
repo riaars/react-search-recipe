@@ -10,6 +10,7 @@ class RecipeList extends Component {
       value,
       handleChange,
       handleSubmit,
+      error,
     } = this.props;
     return (
       <React.Fragment>
@@ -24,15 +25,19 @@ class RecipeList extends Component {
               <h1 className="text-slanted"> recipe list</h1>
             </div>
             <div className="row">
-              {recipes.map(recipe => {
-                return (
-                  <Recipe
-                    handleDetails={() => handleDetails(0, recipe.recipe_id)}
-                    key={recipe.recipe_id}
-                    recipe={recipe}
-                  />
-                );
-              })}
+              {error ? (
+                <h1 className="text-danger text-center">{error}</h1>
+              ) : (
+                recipes.map(recipe => {
+                  return (
+                    <Recipe
+                      handleDetails={() => handleDetails(0, recipe.recipe_id)}
+                      key={recipe.recipe_id}
+                      recipe={recipe}
+                    />
+                  );
+                })
+              )}
             </div>
           </div>
         </div>

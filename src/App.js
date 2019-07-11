@@ -15,15 +15,23 @@ class App extends Component {
     pageIndex: 1,
     search: '',
     query: '&q=',
+    error: '',
   };
 
   async getRecipes() {
     try {
       const data = await fetch(this.state.url);
       const jsonData = await data.json();
-      this.setState({
-        recipes: jsonData.recipes,
-      });
+
+      if (jsonData.recipes.length === 0) {
+        this.setState(() => {
+          return {error: 'sorry, but your search did not return any results'};
+        });
+      } else {
+        this.setState({
+          recipes: jsonData.recipes,
+        });
+      }
     } catch (err) {
       console.log(err);
     }
@@ -44,6 +52,7 @@ class App extends Component {
             value={this.state.search}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
+            error={this.state.error}
           />
         );
       case 0:
