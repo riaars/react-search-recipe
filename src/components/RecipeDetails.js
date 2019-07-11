@@ -2,15 +2,24 @@ import React, {Component} from 'react';
 import {recipe} from '../tempDetails';
 
 class RecipeDetails extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      recipe: recipe,
-      url: `https://www.food2fork.com/api/get?key=dfefb26e6baf70f86eb1c032f7c57c53&rId=${
-        this.props.id
-      }
-`,
-    };
+  state = {
+    recipe: recipe,
+  };
+  async componentDidMount() {
+    const id = this.props.id;
+    const url = `https://www.food2fork.com/api/get?key=dfefb26e6baf70f86eb1c032f7c57c53&rId=${id}`;
+    try {
+      const data = await fetch(url);
+      const jsonData = await data.json();
+      this.setState(
+        () => {
+          return {recipe: jsonData.recipe};
+        },
+        () => {}
+      );
+    } catch (err) {
+      console.log(err);
+    }
   }
   render() {
     const {
@@ -21,6 +30,8 @@ class RecipeDetails extends Component {
       title,
       ingredients,
     } = this.state.recipe;
+
+    const {handleIndex} = this.props;
     return (
       <React.Fragment>
         <div className="container">
@@ -28,7 +39,8 @@ class RecipeDetails extends Component {
             <div className="col-10 mx-auto col-md-6 my-3">
               <button
                 type="button"
-                className="btn btn-warning mb-5 text-capitalize">
+                className="btn btn-warning mb-5 text-capitalize"
+                onClick={() => handleIndex(1)}>
                 back to recipe
               </button>
               <img src={image_url} className="d-block w-100" alt="recipe" />
@@ -36,7 +48,7 @@ class RecipeDetails extends Component {
             <div className="col-10 mx-auto col-md-6 my-3">
               <h6 className="text-uppercase56">{title}</h6>
               <h6 className="text-warning text-capitalize text-slanted">
-                provided by {publisher_url}
+                provided by {publisher}
               </h6>
               <a
                 href={publisher_url}

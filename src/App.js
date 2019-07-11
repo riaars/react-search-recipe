@@ -9,28 +9,82 @@ class App extends Component {
     recipes: recipes,
     url:
       'https://www.food2fork.com/api/search?key=dfefb26e6baf70f86eb1c032f7c57c53',
+    details_id: 35386,
+    pageIndex: 1,
+    search: '',
   };
 
-  // async componentDidMount() {
-  //   try {
-  //     const data = await fetch(this.state.url);
-  //     const jsonData = await data.json();
-  //     this.setState({
-  //       recipes: jsonData.recipes,
-  //     });
-  //     console.log(jsonData);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
+  async getRecipes() {
+    try {
+      const data = await fetch(this.state.url);
+      const jsonData = await data.json();
+      this.setState({
+        recipes: jsonData.recipes,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  // componentDidMount() {
+  //   this.getRecipes();
   // }
 
+  displayPage = index => {
+    switch (index) {
+      default:
+      case 1:
+        return (
+          <RecipeList
+            recipes={this.state.recipes}
+            handleDetails={this.handleDetails}
+            value={this.state.search}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+          />
+        );
+      case 0:
+        return (
+          <RecipeDetails
+            id={this.state.details_id}
+            handleIndex={this.handleIndex}
+          />
+        );
+    }
+  };
+
+  handleIndex = index => {
+    this.setState({
+      pageIndex: index,
+    });
+  };
+
+  handleDetails = (index, id) => {
+    this.setState({
+      pageIndex: index,
+      details_id: id,
+    });
+  };
+
+  handleChange = e => {
+    this.setState(
+      {
+        search: e.target.value,
+      },
+      () => {
+        console.log(this.state.search);
+      }
+    );
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log('hello from handle submit');
+  };
   render() {
     // console.log(this.state.recipes);
     return (
-      <React.Fragment>
-        {/* <RecipeList recipes={this.state.recipes} /> */}
-        <RecipeDetails id={this.state.details_id} />
-      </React.Fragment>
+      <React.Fragment>{this.displayPage(this.state.pageIndex)}</React.Fragment>
     );
   }
 }

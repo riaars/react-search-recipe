@@ -9,7 +9,7 @@ class Recipe extends Component {
       publisher,
       recipe_id,
     } = this.props.recipe;
-
+    const {handleDetails} = this.props;
     return (
       <React.Fragment>
         <div className="col-10 mx-auto col-md-6 col-lg-4 my-3">
@@ -28,7 +28,8 @@ class Recipe extends Component {
               <div className="card-footer">
                 <button
                   type="button"
-                  className="btn btn-primary text-capitalize">
+                  className="btn btn-primary text-capitalize"
+                  onClick={handleDetails}>
                   details
                 </button>
                 <a
